@@ -1,15 +1,7 @@
-function addname(value, obj) {
-  obj.name = 'aang';
-  return obj;
+function foo() {
+  console.log(this);
 }
 
-var person = {
-  name: 'before',
-  age: '28'
-};
-
-console.log(person);
-var copy = addname('min', person);
-console.log(copy);
-console.log(person);
-
+// 메서드로서 호출
+const obj = { foo }; // ES6 프로퍼티 축약 표현
+console.log(obj.foo()); // obj
