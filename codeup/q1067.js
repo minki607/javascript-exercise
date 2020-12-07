@@ -5,7 +5,7 @@
 let a = +(prompt('enter second number'));
 
 if (a > 0) console.log('plus');
-else console.log('minus')
+else console.log('minus');
 
 if (a % 2 === 0) console.log('even');
 else console.log('odd');
