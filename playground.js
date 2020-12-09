@@ -1,15 +1,9 @@
-const obj = {};
-const parent = { x: 1 };
-
-console.log(Object.getPrototypeOf(obj));
-console.log(Object.setPrototypeOf(obj, parent));
-
-console.log(obj.x);
-
-function Circle(radius) {
-  this.radius = radius;
+function decimalToTernary(number) {
+  return parseInt(number, 3);
 }
 
-const circle = new Circle(5);
-console.log(circle);
-console.log(Circle.hasOwnProperty('prototype'));
+function ternaryToDecimal(number) {
+  return parseInt('3', number);
+}
+console.log(decimalToTernary(10));
+console.log(ternaryToDecimal(3));
