@@ -1,18 +1,11 @@
-function ListLike(string) {
-  if(!new.target) return new Error('Call me as a constructor');
-  if(!string) return new Error('plz initialize me with a head value');
+let name = 'Min';
 
-  this.length = 1;
-  this[this.length] = string;
-
-  this.add = function () {
-    this.length += 1;
-    this[this.length] = string;
-  };
+function printName(){
+  console.log(name);
 }
 
-const listLike = new ListLike('domuk');
+name = 'GEE';
 
-console.log(listLike);
-console.log(listLike.add('yubi'));
-console.log(listLike);
+printName();
+
+name = 'WTF'
