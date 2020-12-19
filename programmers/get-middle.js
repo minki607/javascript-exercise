@@ -1,15 +1,6 @@
-// https://programmers.co.kr/learn/courses/30/lessons/12903
+makeCounter = (base = 0) => fn => {
+  base = fn(base);
+  return base;
+};
 
-function solution(s) {
-  const len = s.length;
-  let index;
-  if (len % 2 === 0) {
-    index = Math.floor(len / 2);
-    return (s[index - 1] + s[index]);
-  }
-  index = Math.floor(len / 2);
-  return s[index];
-}
-
-console.log(solution('abcde'));
-console.log(solution('qwer'));
+console.log(makeCounter()(x => x + '10'));
