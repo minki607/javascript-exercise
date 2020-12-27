@@ -1,19 +1,16 @@
-const comments = [
-  'Error et development ipsa facere.',
-  'Nemo qui harum.',
-  'Est est recusandae reprehenderit.',
-  'Aliquam libero quidem enim.',
-  'Culpa quia ut development quo.',
-  'Aliquam ad omnis sunt aperiam aliquid temporibus sunt.',
-  'Aspernatur development ea maiores illum sint qui deleniti optio.',
- ];
+function countEachElement(array) {
+  const res = [];
 
-const getDev = arr => {
-  let total = 0;
-  arr.forEach(value => { if (/development/.test(value)) total++; });
-  return total;
- }
+  for (let i = 0; i < array.length; i++){
+    let cnt = 0;
 
- console.log(getDev(comments));
+    for (let j = 0; j <array.length; j++) {
+      if (i === array[j]) ++cnt;
+    }
+    res[i] = cnt;
+  }
+  return res;
+}
 
- 
+const target = [3,1,3,6,6,1,1];
+console.log(countEachElement(target);
