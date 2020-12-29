@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO exercise</title>
+</head>
+<style>
+  .input-container { 
+    background-color: grey;
+    margin: 30px;
+    padding: 30px;
+    text-align: center;
+  }
+  .todos{
+    text-align: center;
+  }
+
+  .todos li {
+    font-size: 16px;
+    list-style-type: none;
+    width: 300px;
+    margin: 0 auto;
+    border: 1px dotted black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .todos li span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px;
+  }
+
+  .todos li .crossed {
+    color: gray;
+    text-decoration: line-through;
+  }
+
+  .todos input[type='checkbox'] {
+    margin-right: auto;
+  }
+
+  .todos li button, .todos input[type='checkbox'] {
+    margin: 0 15px;
+  }
+
+
+</style>
+<body>
+  <div class='input-container'>
+    <input type='text'><button class='add'>+</button>
+  </div>  
+    <ul class='todos'></ul>
+</body>
+<script>
+  const $input = document.querySelector('input[type="text"]');
+  const $todos = document.querySelector('.todos');
+  const $btn = document.querySelector('.add');
+
+  const addTodo = () => {
+    const $li = document.createElement('li');
+    const $todo = document.createElement('span');
+    $todo.textContent = $input.value;
+    const $checkbox = document.createElement('input');
+    const $delete = document.createElement('button');
+    $delete.textContent = 'x';
+    $delete.onclick = () => $todos.removeChild($delete.parentNode);
+    $checkbox.setAttribute('type', 'checkbox');
+    $checkbox.onchange = () => $todo.classList.toggle('crossed');
+    $li.appendChild($checkbox);
+    $li.appendChild($todo);
+    $li.appendChild($delete);
+    $todos.appendChild($li);
+    $input.value = '';
+  };
+
+  $btn.onclick = () => {
+    if (!$input.value) return;
+    addTodo();
+  };
+
+  $input.onkeydown = e => {
+    if (e.key !== 'Enter' || !$input.value) return;
+    addTodo();
+  };
+</script>
+</html>
