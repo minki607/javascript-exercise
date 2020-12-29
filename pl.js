@@ -1,16 +1,2 @@
-function countEachElement(array) {
-  const res = [];
+// id 를 이용한 요소 노드 취득
 
-  for (let i = 0; i < array.length; i++){
-    let cnt = 0;
-
-    for (let j = 0; j <array.length; j++) {
-      if (i === array[j]) ++cnt;
-    }
-    res[i] = cnt;
-  }
-  return res;
-}
-
-const target = [3,1,3,6,6,1,1];
-console.log(countEachElement(target);
