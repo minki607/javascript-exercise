@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    .done {
+      text-decoration: line-through;
+    } 
+  </style>
+  <form>
+    <input type="text" class="todo-input" placeholder="Enter todo list"/>
+    <button class="add">submit</button>
+  </form>
+  <ul class="todos"></ul>
+  <script>
+    let todos = [];
+    const $todos = document.querySelector('.todos');
+    const $inputTodo = document.querySelector('.todo-input');
+
+    const render = () => {
+      $todos.innerHTML = todos.map(({ id, content, completed }) => {
+        return `<li id ="${id}">
+          <input type="checkbox" ${completed ? 'checked' : ''} />
+          <span class='${completed ? 'done' : ''}'>${content}</span>
+          <button class="remove">X</button>
+          </li>`
+       }).join('');
+    };
+    
+    const fetchTodos = () => {
+      todos = [
+        { id: 3, content: 'HTML', completed: true },
+        { id: 2, content: 'CSS', completed: true },
+        { id: 1, content: 'JavaScript', completed: false }
+      ];
+      render();
+    };
+
+    const addTodo = (() => {
+      const generateId = () => Math.max(...todos.map(todo => todo.id)) + 1;
+      return content => {
+        todos = [{ id: generateId(), content, completed: false }, ...todos];
+        render();
+      };
+    })();
+
+    document.addEventListener('DOMContentLoaded', fetchTodos);
+    $todos.onchange = e => {
+      if (e.target.checked) e.target.nextElementSibling.classList.add('done');
+      else e.target.nextElementSibling.classList.remove('done');
+    }
+
+    document.querySelector('form').onsubmit = e => {
+      e.preventDefault();
+      const content = $inputTodo.value;
+      if (!content) return;
+      addTodo(content);
+    };
+  </script>
+</body>
+</html>

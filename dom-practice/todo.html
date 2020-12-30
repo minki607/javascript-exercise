@@ -82,7 +82,7 @@
     addTodo();
   };
 
-  $input.onkeydown = e => {
+  $input.onkeyup = e => {
     if (e.key !== 'Enter' || !$input.value) return;
     addTodo();
   };
