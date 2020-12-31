@@ -45,14 +45,22 @@
       return content => {
         todos = [{ id: generateId(), content, completed: false }, ...todos];
         render();
+        $inputTodo.value = '';
+        $inputTodo.focus();
       };
     })();
 
     document.addEventListener('DOMContentLoaded', fetchTodos);
     $todos.onchange = e => {
-      if (e.target.checked) e.target.nextElementSibling.classList.add('done');
-      else e.target.nextElementSibling.classList.remove('done');
-    }
+      todos = todos.map(todo => +e.target.parentNode.getAttribute('id') === todo.id ? { ...todo, completed: !todo.completed } : todo);
+      render();
+    };
+
+    $todos.onclick = e => {
+      if (!e.target.classList.contains('remove')) return;
+      todos = todos.filter(todo => todo.id !== +e.target.parentNode.getAttribute('id'));
+      render();
+    };
 
     document.querySelector('form').onsubmit = e => {
       e.preventDefault();
