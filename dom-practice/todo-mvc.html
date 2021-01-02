@@ -59,6 +59,7 @@
     $todos.onclick = e => {
       if (!e.target.classList.contains('remove')) return;
       todos = todos.filter(todo => todo.id !== +e.target.parentNode.getAttribute('id'));
+
       render();
     };
 
