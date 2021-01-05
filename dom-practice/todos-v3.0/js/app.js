@@ -90,7 +90,7 @@ const selectedRender = () => {
 
 $inputTodo.onkeypress = e => {
   if (e.key !== 'Enter') return;
-  [...$nav.children].forEach(li => li.classList.contains('active') ? li.classList.toggle('active') : '');
+  [...$nav.children].forEach(li => li.classList.contains('active') ? li.classList.toggle('active') : '')  ;
   $seeAll.classList.toggle('active');
   addTodo($inputTodo.value);
   $inputTodo.value = '';
