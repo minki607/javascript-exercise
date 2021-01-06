@@ -5,13 +5,14 @@
 
 // 소수(素數, prime number)는 2, 3, 5, 7, 11, 13, 17…과 같이 1과 자신 이외의 어떤 수로도 나눠지지 않는 1보다 큰 양의 정수이다.
 
-// function numberOfPrime(n) {
-//   for (let i = 2; i <= n; i++) {
-//     console.log(i, 'i iter');
-//     for (let j = 1; j <= i; j++) {
-//       console.log(j, 'j-iter');
-//     }
-//   }
-// }
+function numberOfPrime(n) {
+  let nonPrime = []; // 소수가 아닌 요소들을 가질 배열
+  for (let i = 2; i <= n; i++) {
+    for (let j = 2; j < i; j++) {
+      if (i % j === 0) if (!nonPrime.includes(i)) nonPrime.push(i);
+    }
+  }
+  return n - 1 - nonPrime.length;
+}
 
-// console.log(numberOfPrime(10)); // 4
+console.log(numberOfPrime(10)); // 4
