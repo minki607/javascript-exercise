@@ -6,8 +6,7 @@ const $completed = document.createDocumentFragment();
 const $inputTodo = document.querySelector('.input-todo');
 const $nav = document.querySelector('.nav');
 const $seeAll = document.getElementById('all');
-const $seeActive = document.getElementById('active');
-const $seeCompleted = document.getElementById('seeCompleted');
+const $markAll = document.getElementById('ck-complete-all');
 
 // change multiple attributes
 const setAttributes = (element, attributes) => {
@@ -116,4 +115,8 @@ $nav.onclick = e => {
       selectNav(e.target);
       renderList(e.target.textContent);
     }
+}
+
+$markAll.onchange = () => {
+  console.log('changed');
 }

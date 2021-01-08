@@ -4,7 +4,7 @@
 // for 문은 사용하지 않도록 하자.
 
 function getRestCoordinate(array) {
-  const coords = [...array].flat();
+  const coords = array.flat();
   const counts = coords.reduce((acc, cur) => {
     acc[cur] = (acc[cur] || 0) + 1;
     return acc;
