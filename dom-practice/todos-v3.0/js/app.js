@@ -7,6 +7,9 @@ const $inputTodo = document.querySelector('.input-todo');
 const $nav = document.querySelector('.nav');
 const $seeAll = document.getElementById('all');
 const $markAll = document.getElementById('ck-complete-all');
+const $clearCompleted = document.querySelector('.clear-completed > .btn');
+const $completedCount = document.querySelector('.completed-todos');
+const $activeCount = document.querySelector('.active-todos');
 
 // change multiple attributes
 const setAttributes = (element, attributes) => {
@@ -25,6 +28,7 @@ const renderList = (render = 'All') => {
     setAttributes($li, {id , class: 'todo-item'});
     setAttributes($checkbox, {id: `ck-${id}`, type: 'checkbox', class: 'checkbox'});
     $checkbox.checked = completed;
+    
     setAttributes($label, {for: `ck-${id}`, class: completed ? 'done' : ''});
     setAttributes($removeBtn, {class: 'remove-todo far fa-times-circle'})
     $label.textContent = content;
@@ -32,6 +36,8 @@ const renderList = (render = 'All') => {
     $li.appendChild($checkbox);
     $li.appendChild($label);
     $li.appendChild($removeBtn);
+
+    if (!completed) $markAll.checked = false;
 
     if (render === 'All') $all.appendChild($li);
     else if (render === 'Active') !completed ? $active.appendChild($li) : '';
@@ -41,6 +47,10 @@ const renderList = (render = 'All') => {
   if (render === 'All') $todos.appendChild($all);
   else if (render === 'Active') $todos.appendChild($active);
   else if (render === 'Completed') $todos.appendChild($completed);
+
+  const completed = todos.filter(todo => todo.completed).length
+  $completedCount.innerHTML = completed;
+  $activeCount.innerHTML =  todos.length - completed;
 }
 
 const fetchList = () => {
@@ -70,7 +80,7 @@ const removeTodo = (id) => {
 }
 
 const toggleTodo = id => {
-  todos = todos.map(todo => todo.id === +id ? {...todo, completed: !todo.completed} : todo);
+  todos = todos.map(todo => todo.id === +id ? {...todo, completed: !todo.completed} : todo);  
   selectedRender();
 }
 
@@ -86,6 +96,16 @@ const selectedRender = () => {
     }
   });
 };
+
+const checkAll = status => {
+  todos = todos.map(todo => ({...todo, completed: status} ))
+  selectedRender();
+}
+
+const removeCompleted = () => {
+  todos = todos.filter(todo => !todo.completed);
+  selectedRender();
+}
 
 $inputTodo.onkeypress = e => {
   if (e.key !== 'Enter') return;
@@ -118,5 +138,9 @@ $nav.onclick = e => {
 }
 
 $markAll.onchange = () => {
-  console.log('changed');
+  checkAll($markAll.checked);
+}
+
+$clearCompleted.onclick = () => {
+  removeCompleted();
 }
