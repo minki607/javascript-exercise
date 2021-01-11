@@ -4,11 +4,12 @@
 // for 문은 사용하지 않도록 하자.
 
 function findDuplicated(array) {
-  return array.filter((value, index) => {
-    if (array.indexOf(value) !== null && array.indexOf(value) === index) {
+  const dups = array.filter((value, index) => {
+    if (array.indexOf(value) !== null && array.indexOf(value) !== index) {
       return value;
     }
   });
+  return [...new Set(dups)];
 }
 
-console.log(findDuplicated([1, 2, 3, 1, 2, 1, 1])); // [ 1, 2, 3 ]
+console.log(findDuplicated([1, 1, 1, 1, 1, 2, 2, 3, 3, 4, 5, 6]));
