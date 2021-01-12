@@ -5,7 +5,7 @@
 
 function findDuplicated(array) {
   const dups = array.filter((value, index) => {
-    if (array.indexOf(value) !== null && array.indexOf(value) !== index) {
+    if (array.indexOf(value) !== -1 && array.indexOf(value) !== index) {
       return value;
     }
   });
