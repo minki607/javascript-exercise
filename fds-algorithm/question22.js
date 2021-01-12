@@ -8,6 +8,7 @@
 
 function adder(x, y) {
   let sum = 0;
+  if (x > y) [x, y] = [y, x];
   for (let i = x; i <= y; i++) {
     sum += i;
   }
@@ -15,3 +16,4 @@ function adder(x, y) {
 }
 
 console.log(adder(3, 5)); // 12
+console.log(adder(5, 3));
