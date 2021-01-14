@@ -1,6 +1,12 @@
-const factorial = n => {
-  if (n <= 1) return 1;
-  return n * factorial(n - 1);
-};
+function curry(f) {
+  return function(arg1) {
+    return f(arg1);
+  }
+}
 
-console.log(factorial(3));
+function square(arg1) {
+  return arg1 ** 2;
+}
+
+const squared = curry(square);
+console.log(squared(3));
