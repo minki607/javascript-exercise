@@ -7,16 +7,11 @@
 </head>
 <body>
   <!-- event handler attribute -->
-  <button class='btn' onclick='clickHandler(event)'>Click Me</button>
+  <button> click me </button>
+  <span class = 'debounce-msg'>0</span>
   <script>
-    const clickHandler = e => console.log(e);
     
-    // event handler property
-    const $button = document.querySelector('.btn');
-    $button.onclick = clickHandler;
-
-    // addEventListener
-    $button.addEventListener('click', clickHandler);
   </script>
 </body>
 </html>
+
