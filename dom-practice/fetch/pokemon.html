@@ -50,7 +50,7 @@
     <ul class="pokemon"></ul>
 
     <div class='navigation'>
-      <button class="previous-button">&lt</button>
+      <button class="previous-button" >&lt</button>
       <button class="next-button">&gt</button>
     </div>
    
@@ -63,29 +63,44 @@ const $pokeImg = document.querySelector('.pokemon-img');
 const $previousBtn = document.querySelector('.previous-button');
 const $nextBtn = document.querySelector('.next-button');
 
+let offset = 0;
 const request = {
   get(url) {
     return fetch(url);
   }
 };
 
-request.get('https://pokeapi.co/api/v2/pokemon')
-.then(pokemons => pokemons.json())
-.then(jsonpoke => jsonpoke.results.forEach(pokemon => {
-    const li = document.createElement('li');
-    li.innerHTML = pokemon.name;
-    $pokemon.appendChild(li);
-    li.onclick = () => {
-      request.get(pokemon.url)
-        .then(details => details.json())
-        .then(jsondetail => {
-          console.log(jsondetail)
-          $pokeImg.src = jsondetail.sprites.front_default;
-          $pokeImg.alt = jsondetail.species.name + ' sprite image';
-        });
-    };
+const getPokemon = () => {
+  request.get(`https://pokeapi.co/api/v2/pokemon?limit=30&offset=${offset}`)
+    .then(pokemons => pokemons.json())
+    .then(jsonpoke => jsonpoke.results.forEach(pokemon => {
+      const li = document.createElement('li');
+      li.innerHTML = pokemon.name;
+      $pokemon.appendChild(li);
+      li.onclick = () => {
+        request.get(pokemon.url)
+          .then(details => details.json())
+          .then(jsondetail => {
+            console.log(jsondetail);
+            $pokeImg.src = jsondetail.sprites.front_default;
+            $pokeImg.alt = jsondetail.species.name + ' sprite image';
+          });
+      };
 }))
 .catch(console.error);
+}
+
+$previousBtn.onclick = () => {  
+  offset -= 30;
+  $pokemon.innerHTML = '';
+  getPokemon();
+};
+
+$nextBtn.onclick = () => {
+  offset += 30;
+  $pokemon.innerHTML = '';
+  getPokemon();
+};
 
 </script>
 </body>
