@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon Index</title>
+  <style>
+    .poke-container {
+      display:flex;
+      flex-wrap: wrap;
+      justify-content: center;;
+    }
+    .pokemon {
+      list-style-type: none;
+      border: 1px solid rgb(255, 207, 207);
+      padding: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 800px;
+      align-items: center;
+    }
+
+    .pokemon li {
+      padding: 10px;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .pokemon li:hover{ 
+      background-color: rgb(250, 221, 221);
+    }
+  
+    .pokemon-img {
+      width: 100%;
+      max-width: 500px;
+      max-height: 500px;
+    }
+
+    .navigation button {
+      max-width: 300px;
+      height: 100%;
+
+    }
+  </style>
+</head>
+<body>
+  
+  <section class="poke-container">
+    <img class="pokemon-img" src='https://www.pngkey.com/png/detail/349-3498069_pokemon-sprites.png' alt='current pokemon image'></img>
+    <ul class="pokemon"></ul>
+
+    <div class='navigation'>
+      <button class="previous-button">&lt</button>
+      <button class="next-button">&gt</button>
+    </div>
+   
+  </section>
+  
+
+<script>
+const $pokemon = document.querySelector('.pokemon');
+const $pokeImg = document.querySelector('.pokemon-img');
+const $previousBtn = document.querySelector('.previous-button');
+const $nextBtn = document.querySelector('.next-button');
+
+const request = {
+  get(url) {
+    return fetch(url);
+  }
+};
+
+request.get('https://pokeapi.co/api/v2/pokemon')
+.then(pokemons => pokemons.json())
+.then(jsonpoke => jsonpoke.results.forEach(pokemon => {
+    const li = document.createElement('li');
+    li.innerHTML = pokemon.name;
+    $pokemon.appendChild(li);
+    li.onclick = () => {
+      request.get(pokemon.url)
+        .then(details => details.json())
+        .then(jsondetail => {
+          console.log(jsondetail)
+          $pokeImg.src = jsondetail.sprites.front_default;
+          $pokeImg.alt = jsondetail.species.name + ' sprite image';
+        });
+    };
+}))
+.catch(console.error);
+
+</script>
+</body>
+</html>
