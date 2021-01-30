@@ -43,14 +43,35 @@ app.post('/todos', (req, res) => {
 });
 
 app.patch('/todos/:id', (req, res) => {
-  if (!isDuplicateId(req.params.id, todos)) {
+  const { id } = req.params; 
+  if (!isDuplicateId(id, todos)) {
     return res.status(400).send({ error: true, message: 'item with ID not found' });
   }
 
   todos.forEach(todo => {
-    if (todo.id === +req.params.id) todo.completed = req.body.completed;
+    if (todo.id === +id) todo.completed = !req.body.completed;
   });
 
+  return res.send(todos);
+});
+
+app.patch('/todos', (req, res) => {
+  console.log(req.body);
+  todos = todos.map(todo => ({ ...todo, ...req.body }));
+  return res.send(todos);
+});
+
+app.delete('/todos/completed', (req, res) => {
+  todos = todos.filter(todo => !todo.completed);
+  return res.send(todos);
+});
+
+app.delete('/todos/:id', (req, res) => {
+  const { id } = req.params;
+  if (!isDuplicateId(id, todos)) {
+    return res.status(400).send({ error: true, message: 'item with ID not found'});
+  }
+  todos = todos.filter(todo => todo.id !== +id);
   return res.send(todos);
 });
 

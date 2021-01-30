@@ -50,31 +50,19 @@ const addTodo = content => {
 
 const toggleTodo = id => {
   const { completed } = todos.find(todo => todo.id === +id);
-  ajax.patch(`/todos/${id}`, { completed: !completed }, updateTodos);
+  ajax.patch(`/todos/${id}`, { completed }, updateTodos);
 };
 
 const removeTodo = id => {
-  ajax.delete(`/todos/${id}`, _todos => {
-    todos = _todos;
-    console.log('[removeCompleted]', todos)
-    render()
-  })
+  ajax.delete(`/todos/${id}`, updateTodos);
 };
 
 const toggleCompleteAll = completed => {
-  ajax.patch('/todos' , { completed } , _todos => {
-    todos = _todos;
-    console.log('[toggleCompleteAll]', todos);  
-    render();
-  })  
+  ajax.patch('/todos', { completed }, updateTodos);
 };
 
 const removeCompleted = () => {
-  ajax.delete('/todos/completed', _todos => {
-    todos = _todos;
-    console.log('[removeCompleted]', todos)
-    render();
-  })  
+  ajax.delete('/todos/completed', updateTodos);
 };
 
 const changeNavState = id => {
