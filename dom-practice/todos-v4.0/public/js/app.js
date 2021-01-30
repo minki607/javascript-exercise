@@ -1,4 +1,5 @@
-import ajax from './xhr.js';
+// import ajax from './xhr.js';
+import ajax from './promise.js';
 
 // State
 let todos = [];
@@ -36,33 +37,33 @@ const render = () => {
 const updateTodos = _todos => {
   todos = _todos;
   render();
-} 
+};
 
 const getTodos = () => {
-  ajax.get('/todos', updateTodos);
+  ajax.get('/todos').then(updateTodos).catch(console.error);
 };
 
 const generateId = () => (todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1);
 
 const addTodo = content => {
-  ajax.post('/todos', { id: generateId(), content, completed: false }, updateTodos);
+  ajax.post('/todos', { id: generateId(), content, completed: false }).then(updateTodos).catch(console.error);
 };
 
 const toggleTodo = id => {
   const { completed } = todos.find(todo => todo.id === +id);
-  ajax.patch(`/todos/${id}`, { completed }, updateTodos);
+  ajax.patch(`/todos/${id}`, { completed }).then(updateTodos).catch(console.error);
 };
 
 const removeTodo = id => {
-  ajax.delete(`/todos/${id}`, updateTodos);
+  ajax.delete(`/todos/${id}`).then(updateTodos).catch(console.error);
 };
 
 const toggleCompleteAll = completed => {
-  ajax.patch('/todos', { completed }, updateTodos);
+  ajax.patch('/todos', { completed }).then(updateTodos).catch(console.error);
 };
 
 const removeCompleted = () => {
-  ajax.delete('/todos/completed', updateTodos);
+  ajax.delete('/todos/completed').then(updateTodos).catch(console.error);
 };
 
 const changeNavState = id => {
