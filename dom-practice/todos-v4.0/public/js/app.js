@@ -39,27 +39,18 @@ const updateTodos = _todos => {
 } 
 
 const getTodos = () => {
-  ajax.get('/todos', updateTodos)
+  ajax.get('/todos', updateTodos);
 };
 
 const generateId = () => (todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1);
 
 const addTodo = content => {
-  ajax.post('/todos', { id: generateId(), content, completed: false }, _todos => {
-    todos = _todos;
-    console.log('[addTodo]', todos)
-    render();
-  })
+  ajax.post('/todos', { id: generateId(), content, completed: false }, updateTodos);
 };
 
 const toggleTodo = id => {
   const { completed } = todos.find(todo => todo.id === +id);
-  ajax.patch(`/todos/${id}`, {completed: !completed}, _todos => {
-    todos = _todos;
-    console.log('[toggleTodo]', todos)
-    render()
-  })
-
+  ajax.patch(`/todos/${id}`, { completed: !completed }, updateTodos);
 };
 
 const removeTodo = id => {
