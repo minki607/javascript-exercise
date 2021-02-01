@@ -1,5 +1,5 @@
-// import ajax from './xhr.js';
-import ajax from './promise.js';
+// import ajax from './xhr.js'; (콜백함수만을 사용한 방법)
+// import ajax from './promise.js'; (Promise를 사용한 방법)
 
 // State
 let todos = [];
@@ -16,10 +16,8 @@ const $nav = document.querySelector('.nav');
 
 const render = () => {
   let html = '';
-   
-  const _todos = todos.filter(({ completed }) =>
-    navState === 'completed' ? completed : navState === 'active' ? !completed : true
-  );
+
+  const _todos = todos.filter(({ completed }) => (navState === 'completed' ? completed : navState === 'active' ? !completed : true));
 
   _todos.forEach(({ id, content, completed }) => {
     html += `<li id="${id}" class="todo-item">
@@ -40,30 +38,43 @@ const updateTodos = _todos => {
 };
 
 const getTodos = () => {
-  ajax.get('/todos').then(updateTodos).catch(console.error);
+  // ajax.get('/todos').then(updateTodos).catch(console.error);
+  fetch('/todos').then(res => res.json()).then(updateTodos).catch(console.error);
 };
 
+// Generate ID by finding max and adding 1
 const generateId = () => (todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1);
+// Request
+const request = (method, payload) => ({
+  method,
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload),
+});
 
 const addTodo = content => {
-  ajax.post('/todos', { id: generateId(), content, completed: false }).then(updateTodos).catch(console.error);
+  // ajax.post('/todos', { id: generateId(), content, completed: false }).then(updateTodos).catch(console.error);
+  fetch('/todos', request('POST', { id: generateId(), content, completed: false }))
+    .then(res => res.json()).then(updateTodos).catch(console.error);
 };
 
 const toggleTodo = id => {
   const { completed } = todos.find(todo => todo.id === +id);
-  ajax.patch(`/todos/${id}`, { completed }).then(updateTodos).catch(console.error);
+  // ajax.patch(`/todos/${id}`, { completed }).then(updateTodos).catch(console.error);
+  fetch(`/todos/${id}`, request('PATCH', { completed })).then(res => res.json()).then(updateTodos).catch(console.error);
 };
 
 const removeTodo = id => {
-  ajax.delete(`/todos/${id}`).then(updateTodos).catch(console.error);
+  // ajax.delete(`/todos/${id}`).then(updateTodos).catch(console.error);
+  fetch(`/todos/${id}`, request('DELETE')).then(res => res.json()).then(updateTodos).catch(console.error);
 };
 
 const toggleCompleteAll = completed => {
-  ajax.patch('/todos', { completed }).then(updateTodos).catch(console.error);
+  fetch('/todos', request('PATCH', { completed })).then(res => res.json()).then(updateTodos).catch(console.error);
 };
 
 const removeCompleted = () => {
-  ajax.delete('/todos/completed').then(updateTodos).catch(console.error);
+  // ajax.delete('/todos/completed').then(updateTodos).catch(console.error);
+  fetch('/todos/completed', request('DELETE')).then(res => res.json()).then(updateTodos).catch(console.error);
 };
 
 const changeNavState = id => {
@@ -103,7 +114,7 @@ $completeAll.onchange = e => {
 $clearCompleted.onclick = removeCompleted;
 
 $nav.onclick = ({ target }) => {
-  if (target === $nav) return;  
+  if (target === $nav) return;
   // if (!target.matches('.nav > li:not(.active)')) return;
 
   changeNavState(target.id);

@@ -6,7 +6,7 @@ const ajax = (() => {
     xhr.send(JSON.stringify(payload));
     xhr.onload = () => {
       if (xhr.status === 200 || xhr.status === 201) resolve(JSON.parse(xhr.response));
-      else reject(xhr.status);
+      else reject(new Error(xhr.status));
     };
   });
 
