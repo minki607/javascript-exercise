@@ -4,4 +4,5 @@ const isObject = obj => typeof obj === 'object' && obj.constructor === Object;
 const isEmpty = obj => Object.keys(obj).length === 0;
 const isEmptyObject = obj => isObject(obj) && isEmpty(obj);
 
-export default isEmptyObject;
+module.exports = isEmptyObject;
+// export default isEmptyObject;

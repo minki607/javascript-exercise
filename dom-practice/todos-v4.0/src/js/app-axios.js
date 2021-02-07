@@ -1,5 +1,4 @@
-// import ajax from './xhr.js'; (콜백함수만을 사용한 방법)
-// import ajax from './promise.js'; (Promise를 사용한 방법)
+const axios = require('axios');
 
 // State
 let todos = [];
@@ -44,9 +43,13 @@ const getTodos = () => {
 // Generate ID by finding max and adding 1
 const generateId = () => (todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1);
 
-const addTodo = content => {
-  axios.post('/todos',  { id: generateId(), content, completed: false })
-  .then(res => updateTodos(res.data)).catch(console.error);
+const addTodo = async content => {
+  try {
+    const res = await axios.post('/todos', { id: generateId(), content, completed: false });
+    updateTodos(res.data);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const toggleTodo = id => {

@@ -1,11 +1,14 @@
-import express from 'express';
-import cors from 'cors';
-import isEmptyObject from './public/utils/isEmptyObject.js';
-import isDuplicateId from './public/utils/isDuplicateId.js';
+const express = require('express');
+const cors = require('cors');
+const isEmptyObject = require('./utils/isEmptyObject.js');
+const isDuplicateId = require('./utils/isDuplicateId.js');
+console.log(isEmptyObject);
+console.log(isDuplicateId);
 
 // 서버에서 관리할 투두
 let todos = [
-  { id: 3, content: 'Javascript', completed: false },
+  { id: 4, content: 'Javascript', completed: false },
+  { id: 3, content: 'CSSs', completed: true },
   { id: 2, content: 'CSSs', completed: true },
   { id: 1, content: 'HTML', completed: false },
 ];
