@@ -1,9 +1,9 @@
-const $increase = document.querySelector('.increase');
-const $decrease = document.querySelector('.decrease');
-const $counter = document.querySelector('.counter');
+
+
 
 const counter = (() => {
   let count = 0;
+  const $counter = document.querySelector('.counter');
   return {
     increase() {
       $counter.textContent = ++count;
@@ -16,5 +16,5 @@ const counter = (() => {
   };
 })();
 
-$increase.addEventListener('click', counter.increase);
-$decrease.addEventListener('click', counter.decrease);
+document.querySelector('.increase').addEventListener('click', counter.increase);
+document.querySelector('.decrease').addEventListener('click', counter.decrease);

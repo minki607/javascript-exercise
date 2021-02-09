@@ -7,7 +7,7 @@ const updateClock = () => {
   const sec = date.getSeconds();
   const min = date.getMinutes();
   const hour = date.getHours();
-  
+
   const secondRatio = sec / 60;
   const minuteRatio = (secondRatio + min) / 60;
   const hourRatio = (minuteRatio + hour) / 12;
