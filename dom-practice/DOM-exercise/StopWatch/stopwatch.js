@@ -3,7 +3,6 @@ const $resetLap = document.querySelectorAll('.control')[1];
 const $display = document.querySelector('.display');
 const $laps = document.querySelector('.laps');
 
-
 let ms = 0;
 let s = 0;
 let m = 0;
