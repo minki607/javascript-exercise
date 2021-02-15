@@ -1,10 +1,9 @@
 const $accordion = document.querySelector('.accordion');
-const DEFAULT_HEIGHT = '133px';
 let activeMenu = null;
 
-const closeActive = clickedMenu => {
+const closeActive = selected => {
   [...$accordion.children].forEach($menu => {
-    if ($menu.classList.contains('active') && activeMenu !== clickedMenu) {
+    if ($menu.classList.contains('active') && activeMenu !== selected) {
       $menu.classList.remove('active');
     }
     const [_, $submenu] = [...$menu.children];
@@ -12,12 +11,13 @@ const closeActive = clickedMenu => {
   });
 };
 
-const toggleMenu = ({ parentNode, nextElementSibling }) => {
-  closeActive(parentNode);
-  parentNode.classList.toggle('active');
-  if (parentNode.classList.contains('active')) {
-    activeMenu = parentNode;
-    nextElementSibling.style.height = DEFAULT_HEIGHT;
+const toggleMenu = selected => {
+  closeActive(selected);
+  selected.classList.toggle('active');
+  if (selected.classList.contains('active')) {
+    activeMenu = selected;
+    const [_, $submenu] = [...selected.children];
+    $submenu.style.height = `${$submenu.scrollHeight}px`;
   } else {
     activeMenu = null;
   }
@@ -28,13 +28,15 @@ const checkActive = () => {
     if ($menu.classList.contains('active')) {
       activeMenu = $menu;
       const [_, $submenu] = [...$menu.children];
-      $submenu.style.height = DEFAULT_HEIGHT;
+      $submenu.style.height = 'auto';
+      $submenu.style.height = `${$submenu.scrollHeight}px`;
     }
   });
 }
 
 $accordion.addEventListener('click', e => {
-  toggleMenu(e.target);
+  if (!e.target.classList.contains('menu') && !e.target.classList.contains('bx')) return;
+  toggleMenu(e.target.closest('.menu-container'));
 });
 
-document.addEventListener('DOMContentLoaded', checkActive)
+document.addEventListener('DOMContentLoaded', checkActive);
